@@ -9,9 +9,30 @@ class Basket {
         console.log(`${name} has been successfully added. Your basket is starting to look like a treasure trove!`);
     }
 
-    // Calculate the total price of the basket
+    applyDiscount(code, percentage) {
+        // Vérifie si une remise a déjà été appliquée
+        if (this.discount) {
+            console.log("Une remise a déjà été appliquée à ce panier.");
+            return;
+        }
+        // Simule la validation du code de remise
+        // Dans un cas réel, cela impliquerait probablement de vérifier une base de données ou un service externe
+        this.discount = {
+            code,
+            percentage
+        };
+        console.log(`La remise de ${percentage}% a été appliquée.`);
+    }
+
     calculateTotal() {
-        return this.items.reduce((total, item) => total + item.price, 0);
+        let total = this.items.reduce((total, item) => total + item.price, 0);
+        // Applique la remise si elle existe
+        if (this.discount) {
+            total = total - (total * (this.discount.percentage / 100));
+            // Après application, retirez la remise pour empêcher une utilisation ultérieure
+            this.discount = null; // Assurez-vous de gérer cela selon les besoins de votre application
+        }
+        return total;
     }
 
     // Remove an item from the basket by its name
