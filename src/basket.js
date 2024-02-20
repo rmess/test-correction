@@ -5,12 +5,18 @@ class Basket {
 
     // Add an item to the basket
     addItem(name, price) {
+        if (price <= 0) {
+            throw new Error('Price must be greater than 0');
+        }
         this.items.push({ name: name, price: price });
         console.log(`${name} has been successfully added. Your basket is starting to look like a treasure trove!`);
     }
 
     applyDiscount(code, percentage) {
         // Vérifie si une remise a déjà été appliquée
+        if (percentage <= 0) {
+            throw new Error('Discount percentage must be greater than 0');
+        }
         if (this.discount) {
             console.log("Une remise a déjà été appliquée à ce panier.");
             return;
